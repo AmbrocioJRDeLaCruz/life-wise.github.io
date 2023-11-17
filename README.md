@@ -30,7 +30,7 @@ Para ejecutar la aplicación web de Lista de Tareas en tu máquina local, sigue 
 1. **Clona el repositorio:**
 
     ```bash
-    git clone 
+    git clone https://github.com/AmbrocioJRDeLaCruz/life-wise.github.io
     ```
 
 2. **Abre el archivo `index.html` en tu navegador web preferido.**
