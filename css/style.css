@@ -156,3 +156,9 @@ header .input-section {
         min-width: 96%;
     }
 }
+
+/* Estilo para el input de la hora */
+input[type="time"] {
+    margin-left: 10px;
+  }
+  

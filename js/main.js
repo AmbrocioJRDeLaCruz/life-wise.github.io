@@ -208,3 +208,67 @@ function displayTodos(todosArray) {
     `;
   });
 }
+
+// ... (Tu código existente)
+
+const time_input = document.querySelector(".schedule-time");
+
+// Añade un listener para el botón de agregar tarea
+add_btn.addEventListener("click", () => {
+  if (task_input.value === "") {
+    showAlertMessage("Please enter a task", "error");
+  } else {
+    addToDo(task_input, date_input, time_input); // Añade el input de la hora
+    saveToLocalStorage();
+    showAllTodos();
+    task_input.value = "";
+    date_input.value = "";
+    time_input.value = ""; // Limpia el input de la hora
+    showAlertMessage("Task added successfully", "success");
+  }
+});
+
+// Función para agregar tarea con fecha y hora
+function addToDo(task_input, date_input, time_input) {
+  let task = {
+    id: getRandomId(),
+    task: task_input.value.length > 14 ? task_input.value.slice(0, 14) + "..." : task_input.value,
+    dueDate: date_input.value,
+    dueTime: time_input.value, // Añade la hora a la tarea
+    completed: false,
+    status: "pending",
+  };
+
+  // Ajusta la fecha y hora según tu formato preferido
+  let dateTimeString = task.dueDate + " " + task.dueTime;
+  task.dueDateTime = new Date(dateTimeString).toLocaleString();
+
+  todos.push(task);
+
+  // Añade código para gestionar notificaciones aquí
+  scheduleNotification(task);
+}
+
+// Función para programar una notificación
+function scheduleNotification(task) {
+  // Usa Web Notifications API para mostrar una notificación
+  if (Notification.permission === "granted") {
+    const notification = new Notification("Task Reminder", {
+      body: `It's time to take your medication: ${task.task}`,
+    });
+
+    // Cierra la notificación después de 5 segundos
+    setTimeout(() => {
+      notification.close();
+    }, 5000);
+  } else if (Notification.permission !== "denied") {
+    // Solicita permiso si no está denegado
+    Notification.requestPermission().then((permission) => {
+      if (permission === "granted") {
+        scheduleNotification(task);
+      }
+    });
+  }
+}
+// ... (Tu código existente)
+
