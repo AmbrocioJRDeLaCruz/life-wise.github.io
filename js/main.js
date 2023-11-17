@@ -270,5 +270,3 @@ function scheduleNotification(task) {
     });
   }
 }
-// ... (Tu código existente)
-
